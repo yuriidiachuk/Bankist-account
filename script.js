@@ -289,3 +289,24 @@ btnTransfer.addEventListener('click', function (e) {
   clearInterval(timer);
   timer = startLogOutTimer();
 });
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Math.floor(inputLoanAmount.value);
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    setTimeout(function () {
+      currentAccount.movements.push(amount);
+
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
+
+      // Update UI
+      updateUI(currentAccount);
+    }, 2000);
+  }
+  inputLoanAmount.value = '';
+  // reset timer
+  clearInterval(timer);
+  timer = startLogOutTimer();
+});
